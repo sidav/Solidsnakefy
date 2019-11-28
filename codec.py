@@ -54,6 +54,8 @@ def do():
         return
     text = sys.argv[1]
     if len(sys.argv) >= 3:
+        if text[-1] == '.':
+            text = text[:-1]
         text = "This is Snake. %s. Over." % text
 
     print("This is Snake. Understood. Proceeding to write \"%s\". Over." % text)
@@ -61,7 +63,7 @@ def do():
     draw = ImageDraw.Draw(img)
 
     width, height = img.size
-    textboxw, textboxh = width, height * 37 // 100
+    textboxw, textboxh = 85 * width / 100, height * 37 // 100
     set_fonth_and_fontw_by_textbox_size(text, textboxw, textboxh)
     font = ImageFont.truetype("univga-sidav.ttf", FONTH)
 
