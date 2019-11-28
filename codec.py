@@ -3,6 +3,7 @@ from PIL import ImageFont
 from PIL import ImageDraw
 import sys
 import math
+import re
 
 def set_fonth_and_fontw_by_textbox_size(text, w, h):
     global FONTW, FONTH
@@ -22,6 +23,15 @@ def set_fonth_and_fontw_by_textbox_size(text, w, h):
     FONTW = int(currh * 15 // 30)
 
     print("This is Snake. Font w/h are %f, %.f. Over." % (FONTW, FONTH))
+
+def make_report(text):
+    if text[-1] == '.':
+        text = text[:-1]
+    if bool(re.search('[а-яА-Я]', text)):
+        text = "Это Снэйк. %s. Приём." % text
+    else:
+        text = "This is Snake. %s. Over." % text
+    return text
 
 def split_text_in_rect(text, pixelswidth):
     words = text.split()
@@ -54,9 +64,7 @@ def do():
         return
     text = sys.argv[1]
     if len(sys.argv) >= 3:
-        if text[-1] == '.':
-            text = text[:-1]
-        text = "This is Snake. %s. Over." % text
+        text = make_report(text)
 
     print("This is Snake. Understood. Proceeding to write \"%s\". Over." % text)
     img = Image.open("snake-codec.png")
